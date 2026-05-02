@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantix — Precision Meets Intelligence</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Qunatix-LOGO.png">
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Ambient background particles -->
+  <div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-wrapper">
+
+    <!-- ─── HEADER ─── -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-icon">⬡</span>
+        <span class="brand-name">Quantix</span>
+        <span class="brand-sub">Precision Meets Intelligence</span>
+      </div>
+
+      <!-- Live clock — occupies the red-box area -->
+      <div class="header-clock" id="headerClock">
+        <span class="clock-time" id="clockTime">00:00:00</span>
+        <span class="clock-date" id="clockDate">Mon, 01 Jan 2025</span>
+      </div>
+
+      <div class="header-controls">
+        <button class="icon-btn" id="voiceBtn" title="Voice Input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+        <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <button class="icon-btn" id="historyToggle" title="History">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="12 8 12 12 14 14"/><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="main-layout">
+
+      <!-- ─── HISTORY PANEL ─── -->
+      <aside class="history-panel" id="historyPanel">
+        <div class="panel-header">
+          <span>Calculation History</span>
+          <button class="clear-history-btn" id="clearHistory">Clear All</button>
+        </div>
+        <ul class="history-list" id="historyList">
+          <li class="history-empty">No calculations yet</li>
+        </ul>
+      </aside>
+
+      <!-- ─── CALCULATOR BODY ─── -->
+      <main class="calculator">
+
+        <!-- Display -->
+        <div class="display-wrapper">
+          <div class="display-panel">
+            <div class="display-status">
+              <span class="mem-indicator" id="memIndicator"></span>
+              <span class="angle-mode" id="angleMode">RAD</span>
+              <span class="voice-indicator" id="voiceIndicator">🎤</span>
+              <span class="digit-count" id="digitCount"></span>
+              <span class="number-count" id="numberCount"></span>
+            </div>
+            <div class="display-expression" id="expression">0</div>
+            <div class="display-result-row">
+              <div class="display-result" id="result"></div>
+              <span class="ans-digit-count" id="ansDigitCount"></span>
+            </div>
+            <div class="display-bottom-row">
+              <button class="copy-btn" id="copyBtn" title="Copy result">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+          <button class="tab-btn active" data-tab="standard">Standard</button>
+          <button class="tab-btn" data-tab="scientific">Scientific</button>
+          <button class="tab-btn" data-tab="advanced">Advanced</button>
+          <button class="tab-btn" data-tab="converter">Converter</button>
+          <button class="tab-btn" data-tab="graph">Graph</button>
+          <button class="tab-btn" data-tab="mathtools">Math Tools</button>
+        </div>
+
+        <!-- ── TAB: STANDARD ── -->
+        <div class="tab-content active" id="tab-standard">
+          <div class="btn-grid standard-grid">
+            <!-- Row 1: Memory -->
+            <button class="calc-btn mem-btn" data-action="mc">MC</button>
+            <button class="calc-btn mem-btn" data-action="mr">MR</button>
+            <button class="calc-btn mem-btn" data-action="m-plus">M+</button>
+            <button class="calc-btn mem-btn" data-action="m-minus">M−</button>
+            <!-- Row 2 -->
+            <button class="calc-btn special-btn" data-action="ac">AC</button>
+            <button class="calc-btn special-btn" data-action="c">C</button>
+            <button class="calc-btn special-btn" data-action="percent">%</button>
+            <button class="calc-btn op-btn" data-action="op" data-value="÷">÷</button>
+            <!-- Row 3 -->
+            <button class="calc-btn num-btn" data-action="num" data-value="7">7</button>
+            <button class="calc-btn num-btn" data-action="num" data-value="8">8</button>
+            <button class="calc-btn num-btn" data-action="num" data-value="9">9</button>
+            <button class="calc-btn op-btn" data-action="op" data-value="×">×</button>
+            <!-- Row 4 -->
+            <button class="calc-btn num-btn" data-action="num" data-value="4">4</button>
+            <button class="calc-btn num-btn" data-action="num" data-value="5">5</button>
+            <button class="calc-btn num-btn" data-action="num" data-value="6">6</button>
+            <button class="calc-btn op-btn" data-action="op" data-value="−">−</button>
+            <!-- Row 5 -->
+            <button class="calc-btn num-btn" data-action="num" data-value="1">1</button>
+            <button class="calc-btn num-btn" data-action="num" data-value="2">2</button>
+            <button class="calc-btn num-btn" data-action="num" data-value="3">3</button>
+            <button class="calc-btn op-btn" data-action="op" data-value="+">+</button>
+            <!-- Row 6 -->
+            <button class="calc-btn num-btn span-2" data-action="num" data-value="0">0</button>
+            <button class="calc-btn num-btn" data-action="dot">.</button>
+            <button class="calc-btn eq-btn" data-action="equals">=</button>
+          </div>
+        </div>
+
+        <!-- ── TAB: SCIENTIFIC ── -->
+        <div class="tab-content" id="tab-scientific">
+          <div class="angle-toggle-row">
+            <button class="angle-btn active" id="radBtn">RAD</button>
+            <button class="angle-btn" id="degBtn">DEG</button>
+          </div>
+          <div class="btn-grid sci-grid">
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="sin">sin</button><div class="fn-tooltip"><b>Sine  sin(x)</b><br>Opposite / Hypotenuse<br><span class="fn-tooltip-syn">sin(90°) = 1 &nbsp;|&nbsp; sin(π/2) = 1</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="cos">cos</button><div class="fn-tooltip"><b>Cosine  cos(x)</b><br>Adjacent / Hypotenuse<br><span class="fn-tooltip-syn">cos(0°) = 1 &nbsp;|&nbsp; cos(π) = −1</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="tan">tan</button><div class="fn-tooltip"><b>Tangent  tan(x)</b><br>sin(x) / cos(x)<br><span class="fn-tooltip-syn">tan(45°) = 1 &nbsp;|&nbsp; tan(π/4) = 1</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="asin">sin⁻¹</button><div class="fn-tooltip"><b>Arcsine  sin⁻¹(x)</b><br>Inverse of sin, result ∈ [−90°, 90°]<br><span class="fn-tooltip-syn">sin⁻¹(1) = 90° = π/2</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="acos">cos⁻¹</button><div class="fn-tooltip"><b>Arccosine  cos⁻¹(x)</b><br>Inverse of cos, result ∈ [0°, 180°]<br><span class="fn-tooltip-syn">cos⁻¹(0) = 90° = π/2</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="atan">tan⁻¹</button><div class="fn-tooltip"><b>Arctangent  tan⁻¹(x)</b><br>Inverse of tan, result ∈ (−90°, 90°)<br><span class="fn-tooltip-syn">tan⁻¹(1) = 45° = π/4</span></div></div>
+
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="log">log</button><div class="fn-tooltip"><b>Logarithm  log₁₀(x)</b><br>Log base 10 (common log)<br><span class="fn-tooltip-syn">log(100) = 2 &nbsp;|&nbsp; log(1000) = 3</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="ln">ln</button><div class="fn-tooltip"><b>Natural Log  ln(x)</b><br>Log base e ≈ 2.718<br><span class="fn-tooltip-syn">ln(e) = 1 &nbsp;|&nbsp; ln(1) = 0</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="exp">eˣ</button><div class="fn-tooltip"><b>Exponential  eˣ</b><br>e raised to power x<br><span class="fn-tooltip-syn">e¹ ≈ 2.718 &nbsp;|&nbsp; e⁰ = 1</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="sqrt">√x</button><div class="fn-tooltip"><b>Square Root  √x</b><br>Number that squares to x<br><span class="fn-tooltip-syn">√9 = 3 &nbsp;|&nbsp; √2 ≈ 1.414</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="cbrt">∛x</button><div class="fn-tooltip"><b>Cube Root  ∛x</b><br>Number that cubed gives x<br><span class="fn-tooltip-syn">∛8 = 2 &nbsp;|&nbsp; ∛27 = 3</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="pow2">x²</button><div class="fn-tooltip"><b>Square  x²</b><br>Multiplies x by itself<br><span class="fn-tooltip-syn">4² = 16 &nbsp;|&nbsp; 3² = 9</span></div></div>
+
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="pow3">x³</button><div class="fn-tooltip"><b>Cube  x³</b><br>x multiplied by itself twice<br><span class="fn-tooltip-syn">2³ = 8 &nbsp;|&nbsp; 3³ = 27</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="powY">xʸ</button><div class="fn-tooltip"><b>Power  xʸ</b><br>x raised to the power y<br><span class="fn-tooltip-syn">2^10 = 1024 &nbsp;|&nbsp; 5^3 = 125</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="factorial">x!</button><div class="fn-tooltip"><b>Factorial  n!</b><br>1 × 2 × … × n<br><span class="fn-tooltip-syn">5! = 120 &nbsp;|&nbsp; 10! = 3628800</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="abs">|x|</button><div class="fn-tooltip"><b>Absolute Value  |x|</b><br>Distance from zero (always ≥ 0)<br><span class="fn-tooltip-syn">|−5| = 5 &nbsp;|&nbsp; |3| = 3</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="inv">1/x</button><div class="fn-tooltip"><b>Reciprocal  1/x</b><br>Multiplicative inverse of x<br><span class="fn-tooltip-syn">1/4 = 0.25 &nbsp;|&nbsp; 1/2 = 0.5</span></div></div>
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="pi">π</button><div class="fn-tooltip"><b>Pi  π</b><br>Ratio of circumference to diameter<br><span class="fn-tooltip-syn">π ≈ 3.14159265… (constant)</span></div></div>
+
+            <div class="fn-tooltip-wrap"><button class="calc-btn sci-btn" data-action="sci" data-fn="e">e</button><div class="fn-tooltip"><b>Euler's number  e</b><br>Base of natural logarithm<br><span class="fn-tooltip-syn">e ≈ 2.71828… (constant)</span></div></div>
+            <button class="calc-btn sci-btn" data-action="bracket" data-value="(">(</button>
+            <button class="calc-btn sci-btn" data-action="bracket" data-value=")">)</button>
+            <button class="calc-btn special-btn" data-action="ac">AC</button>
+            <button class="calc-btn special-btn" data-action="c">C</button>
+            <button class="calc-btn eq-btn" data-action="equals">=</button>
+          </div>
+        </div>
+
+        <!-- ── TAB: ADVANCED ── -->
+        <div class="tab-content" id="tab-advanced">
+          <div class="advanced-section">
+            <h3 class="section-label">Numeric Differentiation <span class="section-hint">d/dx f(x) at x</span></h3>
+            <div class="adv-angle-row">
+              <span class="adv-angle-label">Trig angle unit:</span>
+              <div class="adv-angle-toggle">
+                <button class="adv-angle-btn active" id="diffRad" data-mode="rad">RAD</button>
+                <button class="adv-angle-btn" id="diffDeg" data-mode="deg">DEG</button>
+              </div>
+              <span class="adv-angle-hint">Auto-applied to sin, cos, tan and inverses</span>
+            </div>
+            <div class="advanced-input-row">
+              <input type="text" class="adv-input" id="diffFn" placeholder="f(x) e.g. sin(x)*x^2" />
+              <input type="text" class="adv-input adv-small" id="diffX" placeholder="x value e.g. π/2" />
+              <button class="adv-clear-btn" id="clearDiff" title="Clear">✕</button>
+              <div class="adv-calc-wrap">
+                <button class="pi-insert-btn pi-above" id="diffPiBtn" title="Insert π — click a field first">π</button>
+                <button class="adv-btn" id="calcDiff">Calc</button>
+              </div>
+            </div>
+            <div class="adv-result" id="diffResult"></div>
+          </div>
+
+          <div class="advanced-section">
+            <h3 class="section-label">Numeric Integration <span class="section-hint">∫ f(x)dx from a to b</span></h3>
+            <div class="adv-angle-row">
+              <span class="adv-angle-label">Trig angle unit:</span>
+              <div class="adv-angle-toggle">
+                <button class="adv-angle-btn active" id="intRad" data-mode="rad">RAD</button>
+                <button class="adv-angle-btn" id="intDeg" data-mode="deg">DEG</button>
+              </div>
+              <span class="adv-angle-hint">Auto-applied to sin, cos, tan and inverses</span>
+            </div>
+            <div class="advanced-input-row">
+              <input type="text" class="adv-input" id="intFn" placeholder="f(x) e.g. x^2+sin(x)" />
+              <input type="text" class="adv-input adv-small" id="intA" placeholder="a  e.g. 0" />
+              <input type="text" class="adv-input adv-small" id="intB" placeholder="b  e.g. π" />
+              <button class="adv-clear-btn" id="clearInt" title="Clear">✕</button>
+              <div class="adv-calc-wrap">
+                <button class="pi-insert-btn pi-above" id="intPiBtn" title="Insert π — click a field first">π</button>
+                <button class="adv-btn" id="calcInt">Calc</button>
+              </div>
+            </div>
+            <div class="adv-result" id="intResult"></div>
+          </div>
+
+          <div class="advanced-section">
+            <h3 class="section-label">Extra Functions</h3>
+            <div class="btn-grid extra-grid">
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="floor">⌊x⌋</button>
+                <div class="fn-tooltip"><b>Floor  ⌊x⌋</b><br>Rounds down to nearest integer<br><span class="fn-tooltip-syn">⌊3.7⌋ = 3 &nbsp;|&nbsp; ⌊−2.1⌋ = −3</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="ceil">⌈x⌉</button>
+                <div class="fn-tooltip"><b>Ceiling  ⌈x⌉</b><br>Rounds up to nearest integer<br><span class="fn-tooltip-syn">⌈3.1⌉ = 4 &nbsp;|&nbsp; ⌈−2.9⌉ = −2</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="round">rnd</button>
+                <div class="fn-tooltip"><b>Round</b><br>Rounds to nearest integer<br><span class="fn-tooltip-syn">round(3.5) = 4 &nbsp;|&nbsp; round(3.4) = 3</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="sign">sgn</button>
+                <div class="fn-tooltip"><b>Sign  sgn(x)</b><br>Returns −1, 0, or +1<br><span class="fn-tooltip-syn">sgn(5) = 1 &nbsp;|&nbsp; sgn(−3) = −1 &nbsp;|&nbsp; sgn(0) = 0</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="random">rand</button>
+                <div class="fn-tooltip"><b>Random</b><br>Generates a random number in [0, 1)<br><span class="fn-tooltip-syn">rand → e.g. 0.7342</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="mod">mod</button>
+                <div class="fn-tooltip"><b>Modulo  a mod b</b><br>Remainder after division<br><span class="fn-tooltip-syn">10 mod 3 = 1 &nbsp;|&nbsp; 7 mod 2 = 1</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="log2">log₂</button>
+                <div class="fn-tooltip"><b>Log base 2  log₂(x)</b><br>Logarithm with base 2<br><span class="fn-tooltip-syn">log₂(8) = 3 &nbsp;|&nbsp; log₂(1024) = 10</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="sinh">sinh</button>
+                <div class="fn-tooltip"><b>Hyperbolic Sine  sinh(x)</b><br>sinh(x) = (eˣ − e⁻ˣ) / 2<br><span class="fn-tooltip-syn">sinh(0) = 0 &nbsp;|&nbsp; sinh(1) ≈ 1.175</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="cosh">cosh</button>
+                <div class="fn-tooltip"><b>Hyperbolic Cosine  cosh(x)</b><br>cosh(x) = (eˣ + e⁻ˣ) / 2<br><span class="fn-tooltip-syn">cosh(0) = 1 &nbsp;|&nbsp; cosh(1) ≈ 1.543</span></div>
+              </div>
+              <div class="fn-tooltip-wrap">
+                <button class="calc-btn sci-btn" data-action="sci" data-fn="tanh">tanh</button>
+                <div class="fn-tooltip"><b>Hyperbolic Tangent  tanh(x)</b><br>tanh(x) = sinh(x)/cosh(x) &nbsp;∈ (−1, 1)<br><span class="fn-tooltip-syn">tanh(0) = 0 &nbsp;|&nbsp; tanh(1) ≈ 0.762</span></div>
+              </div>
+              <button class="calc-btn special-btn" data-action="ac">AC</button>
+              <button class="calc-btn eq-btn" data-action="equals">=</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB: CONVERTER ── -->
+        <div class="tab-content" id="tab-converter">
+          <div class="converter-panel">
+            <h3 class="section-label">Number System Converter</h3>
+            <div class="conv-input-group">
+              <label>Input Value</label>
+              <input type="text" id="convInput" class="conv-input" placeholder="Enter a number..." />
+            </div>
+            <div class="conv-base-select">
+              <label>Input Base</label>
+              <div class="base-btns">
+                <button class="base-btn active" data-base="10">Decimal (10)</button>
+                <button class="base-btn" data-base="2">Binary (2)</button>
+                <button class="base-btn" data-base="8">Octal (8)</button>
+                <button class="base-btn" data-base="16">Hex (16)</button>
+              </div>
+            </div>
+            <div class="conv-results">
+              <div class="conv-result-card" id="decResult">
+                <span class="conv-label">Decimal</span>
+                <span class="conv-value" id="decVal">—</span>
+              </div>
+              <div class="conv-result-card" id="binResult">
+                <span class="conv-label">Binary</span>
+                <span class="conv-value" id="binVal">—</span>
+              </div>
+              <div class="conv-result-card" id="octResult">
+                <span class="conv-label">Octal</span>
+                <span class="conv-value" id="octVal">—</span>
+              </div>
+              <div class="conv-result-card" id="hexResult">
+                <span class="conv-label">Hexadecimal</span>
+                <span class="conv-value" id="hexVal">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB: GRAPH ── -->
+        <div class="tab-content" id="tab-graph">
+          <div class="graph-panel">
+            <h3 class="section-label">Function Plotter</h3>
+
+            <!-- Desmos-style function list -->
+            <div class="fn-list" id="fnList"></div>
+            <button class="add-fn-btn" id="addFnBtn">＋ Add function</button>
+
+            <!-- x range + plot (optional) -->
+            <div class="graph-input-row">
+              <input type="number" id="graphXMin" class="adv-input adv-small" placeholder="x min (opt)" />
+              <input type="number" id="graphXMax" class="adv-input adv-small" placeholder="x max (opt)" />
+              <button class="adv-btn" id="plotBtn">Plot</button>
+            </div>
+
+            <div class="graph-canvas-wrap" id="graphCanvasWrap">
+              <canvas id="graphCanvas"></canvas>
+              <div class="graph-tooltip" id="graphTooltip"></div>
+              <!-- zoom/pan + theme controls overlay -->
+              <div class="graph-overlay-controls">
+                <button class="graph-ctrl-btn" id="graphZoomIn"    title="Zoom in">+</button>
+                <button class="graph-ctrl-btn" id="graphZoomOut"   title="Zoom out">−</button>
+                <button class="graph-ctrl-btn" id="graphReset"     title="Reset view">⌂</button>
+                <button class="graph-ctrl-btn graph-theme-btn" id="graphThemeBtn" title="Toggle graph theme">☀</button>
+              </div>
+            </div>
+            <div class="graph-hint">
+              Drag to pan · Scroll to zoom · x range optional · f(x) or f(y) · Supports: sin cos tan sqrt log abs PI E ^
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB: MATH TOOLS ── -->
+        <div class="tab-content" id="tab-mathtools">
+          <div id="mathToolsRoot"></div>
+        </div>
+
+      </main>
+
+    </div><!-- end main-layout -->
+  </div><!-- end app-wrapper -->
+
+  <!-- Voice modal indicator -->
+  <div class="voice-modal" id="voiceModal">
+    <div class="voice-pulse"></div>
+    <p>Listening… speak your calculation</p>
+    <button id="voiceCancel">Cancel</button>
+  </div>
+
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="math-tools.css" />
+  <script src="math-tools.js"></script>
+</body>
+</html>

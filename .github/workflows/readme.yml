@@ -1,0 +1,155 @@
+name: 📄 Auto README
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    name: Keep README up to date
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate README.md
+        run: |
+          python3 - <<'PYEOF'
+          import subprocess, datetime
+
+          repo = subprocess.getoutput("git remote get-url origin").strip()
+          if repo.startswith("http"):
+              repo_url = repo
+          else:
+              repo_url = "https://github.com/" + "/".join(repo.replace(".git","").split(":")[-1].split("/")[-2:])
+
+          content = (
+"""# Quantix — Scientific Calculator
+
+> **Precision Meets Intelligence** — A feature-rich, browser-based scientific calculator with graphing, math tools, and voice input.
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat)
+
+---
+
+For Testing Purpose You Can Visit :- https://quantixbysoumik.netlify.app/
+
+## ✨ Features
+
+| Tab | What it does |
+|-----|-------------|
+| **Standard** | Basic arithmetic with memory (MC / MR / M+ / M−) |
+| **Scientific** | Trig, log, hyperbolic, floor/ceil, modulo, random & more |
+| **Advanced** | Summation (Σ), differentiation, integration |
+| **Converter** | Decimal ↔ Binary ↔ Octal ↔ Hexadecimal |
+| **Graph** | Multi-function plotter — drag to pan, scroll to zoom |
+| **Math Tools** | P&C, Inequalities, Quadratic Solver, Binomial Theorem, Relations & Functions |
+
+### Extra goodies
+- 🎤 **Voice Input** — speak your calculation
+- 🌓 **Dark / Light theme** toggle
+- 🕐 **Live clock** in the header
+- 📋 **Copy result** to clipboard
+- 🕘 **Calculation history** panel
+
+---
+
+## 📁 Project Structure
+
+```
+quantix/
+├── .github/
+│   └── workflows/
+│       └── readme.yml    # Auto README workflow
+├── index.html            # App shell & tab layout
+├── style.css             # Global design tokens & component styles
+├── script.js             # Calculator logic, graphing, voice, history
+├── math-tools.css        # Styles for the Math Tools panel
+├── math-tools.js         # Math Tools panel logic
+└── Qunatix-LOGO.png      # App logo / favicon
+```
+
+---
+
+## 🚀 Getting Started
+
+Just open `index.html` in any modern browser — no build step required.
+
+```bash
+git clone """ + repo_url + """
+cd quantix
+open index.html
+```
+
+> **VS Code tip:** Install the **Live Server** extension, right-click `index.html` → *Open with Live Server* for hot-reload.
+
+---
+
+## 🛠️ Math Tools Reference
+
+### Permutations & Combinations
+- **ⁿPᵣ** = n! / (n−r)!
+- **ⁿCᵣ** = n! / (r! × (n−r)!)
+
+### Quadratic Solver
+Given **ax² + bx + c = 0**: Discriminant · Roots · Vertex · Vertex form · Sum & Product of roots
+
+### Binomial Theorem
+General term: **Tᵣ₊₁ = ⁿCᵣ × aⁿ⁻ʳ × bʳ** — full expansion table included
+
+### Inequalities
+Linear · Quadratic · Wavy Curve · Modulus · Double inequalities
+
+### Relations & Functions
+Domain · Range · Injectivity · Surjectivity checker with arrow-diagram visualisation
+
+---
+
+## 🎨 Design System
+
+| Token | Value |
+|-------|-------|
+| Primary font | Inter |
+| Mono font | JetBrains Mono |
+| Accent cyan | `#00d4ff` |
+| Accent violet | `#a855f7` |
+| Border radius | `8px / 12px` |
+
+---
+
+## 📜 License
+
+MIT © 2026 Quantix
+
+---
+
+> _README auto-generated on """ + datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC") + """_
+""")
+
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(content)
+          print("README.md written successfully.")
+          PYEOF
+
+      - name: Commit README if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then
+            echo "README unchanged — nothing to commit."
+          else
+            git commit -m "docs: auto-update README [skip ci]"
+            git push
+          fi

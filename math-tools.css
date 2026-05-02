@@ -1,0 +1,359 @@
+/* ============================================================
+   Quantix — Math Tools Panel  (math-tools.css)
+   Inherits CSS variables from style.css
+   ============================================================ */
+
+/* ── Tool Sections ── */
+.mt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 700px) { .mt-grid { grid-template-columns: 1fr; } }
+
+.mt-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  transition: border-color 0.2s;
+}
+.mt-card:hover { border-color: var(--accent-primary); }
+
+.mt-card-title {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #00d4ff, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mt-card-title .mt-icon { font-size: 1rem; }
+
+/* ── Form rows ── */
+.mt-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.mt-label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  min-width: 30px;
+}
+.mt-input {
+  flex: 1;
+  min-width: 60px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.mt-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 10px rgba(14,165,233,0.2);
+}
+.mt-input::placeholder { color: var(--text-dim); }
+
+.mt-btn {
+  padding: 8px 18px;
+  background: linear-gradient(90deg, #00d4ff, #7c3aed);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+.mt-btn:hover {
+  background: linear-gradient(90deg, #22e5ff, #9333ea);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,212,255,0.35), 0 0 20px rgba(168,85,247,0.25);
+}
+.mt-btn:active { transform: translateY(1px); }
+
+.mt-btn-secondary {
+  background: rgba(14,165,233,0.12);
+  border: 1px solid rgba(14,165,233,0.3);
+  color: var(--accent-primary);
+}
+.mt-btn-secondary:hover { background: rgba(14,165,233,0.22); }
+
+/* ── Result box ── */
+.mt-result {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--accent-success);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent-success);
+  min-height: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  word-break: break-word;
+}
+.mt-result.error {
+  background: rgba(239,68,68,0.06);
+  border-left-color: var(--accent-danger);
+  color: var(--accent-danger);
+}
+.mt-result-line { line-height: 1.6; }
+.mt-result-label {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* ── Canvas for mini graphs ── */
+.mt-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-top: 12px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #fff;
+  cursor: crosshair;
+}
+.mt-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Tab sub-navigation ── */
+.mt-sub-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+}
+.mt-sub-btn {
+  padding: 6px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.mt-sub-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+.mt-sub-btn.active {
+  background: rgba(168,85,247,0.15);
+  border-color: #a855f7;
+  color: #c084fc;
+}
+
+/* ── Interval number line ── */
+.mt-number-line-wrap {
+  margin-top: 10px;
+  overflow-x: auto;
+}
+.mt-number-line-canvas {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+/* ── Binomial term table ── */
+.mt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.78rem;
+}
+.mt-table th, .mt-table td {
+  padding: 6px 10px;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+  font-family: var(--font-mono);
+}
+.mt-table th {
+  background: rgba(14,165,233,0.10);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.mt-table td { color: var(--text-primary); }
+.mt-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+/* ── Relation/Function visual ── */
+.mt-rf-canvas {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: #fff;
+  margin-top: 10px;
+}
+
+/* Light mode overrides */
+[data-theme="light"] .mt-card   { background: rgba(0,0,0,0.03); }
+[data-theme="light"] .mt-input  { background: rgba(0,0,0,0.04); color: #0d1117; }
+[data-theme="light"] .mt-result { color: #065f46; }
+[data-theme="light"] .mt-result.error { color: #dc2626; }
+[data-theme="light"] .mt-sub-btn { color: #374151; background: rgba(0,0,0,0.05); }
+
+/* ── Per-section colour coding — ALL calculator sections ──
+   Color palette:
+   Cyan    #00d4ff / #67e8f9   — primary / value
+   Violet  #a855f7 / #c084fc
+   Amber   #f59e0b / #fcd34d
+   Rose    #f43f5e / #fb7185
+   Emerald #10b981 / #34d399
+   Orange  #f97316 / #fdba74
+   Sky     #38bdf8 / #7dd3fc
+   Lime    #84cc16 / #bef264
+── */
+
+/* Helper: strip inherited green from .mt-result so individual colours show */
+.mt-result { color: unset; }
+
+/* ─── P & C ─── */
+[data-sec="perm"].mt-result-label  { color:#00d4ff; -webkit-text-fill-color:#00d4ff; background:none; }
+[data-sec="perm"].mt-result-line   { color:#67e8f9; background:rgba(0,212,255,0.07); border-radius:4px; padding:2px 6px; }
+
+[data-sec="comb"].mt-result-label  { color:#a855f7; -webkit-text-fill-color:#a855f7; background:none; }
+[data-sec="comb"].mt-result-line   { color:#c084fc; background:rgba(168,85,247,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="pc-rel"].mt-result-label { color:#f59e0b; -webkit-text-fill-color:#f59e0b; background:none; }
+[data-sec="pc-rel"].mt-result-line  { color:#fcd34d; background:rgba(245,158,11,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Inequalities — Linear ─── */
+[data-sec="ineq-sol"].mt-result-label { color:#f43f5e; -webkit-text-fill-color:#f43f5e; background:none; }
+[data-sec="ineq-sol"].mt-result-line  { color:#fb7185; background:rgba(244,63,94,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="ineq-int"].mt-result-label { color:#10b981; -webkit-text-fill-color:#10b981; background:none; }
+[data-sec="ineq-int"].mt-result-line  { color:#34d399; background:rgba(16,185,129,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Inequalities — Quadratic ─── */
+[data-sec="ineq-disc"].mt-result-label { color:#38bdf8; -webkit-text-fill-color:#38bdf8; background:none; }
+[data-sec="ineq-disc"].mt-result-line  { color:#7dd3fc; background:rgba(56,189,248,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Inequalities — Wavy Curve ─── */
+[data-sec="wavy-roots"].mt-result-label { color:#f97316; -webkit-text-fill-color:#f97316; background:none; }
+[data-sec="wavy-sol"].mt-result-line    { color:#fdba74; background:rgba(249,115,22,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Quadratic Solver ─── */
+[data-sec="disc"].mt-result-label      { color:#00d4ff; -webkit-text-fill-color:#00d4ff; background:none; }
+[data-sec="disc"].mt-result-line       { color:#67e8f9; background:rgba(0,212,255,0.07); border-radius:4px; padding:2px 6px; }
+
+[data-sec="roots"].mt-result-label     { color:#a855f7; -webkit-text-fill-color:#a855f7; background:none; }
+[data-sec="roots"].mt-result-line      { color:#c084fc; background:rgba(168,85,247,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="vertex"].mt-result-label    { color:#f59e0b; -webkit-text-fill-color:#f59e0b; background:none; }
+[data-sec="vertex"].mt-result-line     { color:#fcd34d; background:rgba(245,158,11,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="vform"].mt-result-label     { color:#f43f5e; -webkit-text-fill-color:#f43f5e; background:none; }
+[data-sec="vform"].mt-result-line      { color:#fb7185; background:rgba(244,63,94,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="sumproduct"].mt-result-label { color:#10b981; -webkit-text-fill-color:#10b981; background:none; }
+[data-sec="sumproduct"].mt-result-line  { color:#34d399; background:rgba(16,185,129,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Binomial ─── */
+[data-sec="binom-term"].mt-result-label { color:#a855f7; -webkit-text-fill-color:#a855f7; background:none; }
+[data-sec="binom-term"].mt-result-line  { color:#c084fc; background:rgba(168,85,247,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="binom-total"].mt-result-label { color:#10b981; -webkit-text-fill-color:#10b981; background:none; }
+[data-sec="binom-total"].mt-result-line  { color:#34d399; background:rgba(16,185,129,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Relation & Function ─── */
+[data-sec="rf-domain"].mt-result-label { color:#00d4ff; -webkit-text-fill-color:#00d4ff; background:none; }
+[data-sec="rf-domain"].mt-result-line  { color:#67e8f9; background:rgba(0,212,255,0.07); border-radius:4px; padding:2px 6px; }
+
+[data-sec="rf-range"].mt-result-label  { color:#a855f7; -webkit-text-fill-color:#a855f7; background:none; }
+[data-sec="rf-range"].mt-result-line   { color:#c084fc; background:rgba(168,85,247,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="rf-props"].mt-result-label  { color:#f59e0b; -webkit-text-fill-color:#f59e0b; background:none; }
+[data-sec="rf-props"].mt-result-line   { color:#fcd34d; background:rgba(245,158,11,0.08); border-radius:4px; padding:2px 6px; }
+
+[data-sec="fn-check"].mt-result-line   { color:#38bdf8; background:rgba(56,189,248,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Inequalities — Modulus ─── */
+[data-sec="mod-sol"].mt-result-line  { color:#f97316; background:rgba(249,115,22,0.08); border-radius:4px; padding:2px 6px; }
+
+/* ─── Inequalities — Double ─── */
+[data-sec="dbl-step"].mt-result-label { color:#38bdf8; -webkit-text-fill-color:#38bdf8; background:none; }
+[data-sec="dbl-step"].mt-result-line  { color:#7dd3fc; background:rgba(56,189,248,0.07); border-radius:4px; padding:2px 8px; font-family:var(--font-mono); }
+[data-sec="dbl-sol"].mt-result-label  { color:#84cc16; -webkit-text-fill-color:#84cc16; background:none; }
+[data-sec="dbl-sol"].mt-result-line   { color:#bef264; background:rgba(132,204,22,0.08); border-radius:4px; padding:2px 6px; }
+[data-sec="dbl-final"].mt-result-label{ color:#f97316; -webkit-text-fill-color:#f97316; background:none; }
+[data-sec="dbl-final"].mt-result-line { color:#fff; background:linear-gradient(90deg,rgba(56,189,248,0.2),rgba(132,204,22,0.18)); border-radius:6px; padding:5px 10px; font-size:0.95rem; border-left:3px solid #84cc16; }
+
+/* ─── Binomial — Final Answer ─── */
+[data-sec="binom-final"].mt-result-label { color:#f97316; -webkit-text-fill-color:#f97316; background:none; }
+[data-sec="binom-final"].mt-result-line  { color:#fff; background:linear-gradient(90deg,rgba(124,58,237,0.25),rgba(16,185,129,0.2)); border-radius:6px; padding:5px 10px; font-size:1rem; border-left:3px solid #10b981; }
+
+/* ─── Function Checker — extended ─── */
+[data-sec="fn-type"].mt-result-label   { color:#a855f7; -webkit-text-fill-color:#a855f7; background:none; }
+[data-sec="fn-type"].mt-result-line    { color:#c084fc; background:rgba(168,85,247,0.1); border-radius:4px; padding:4px 8px; font-size:0.9rem; }
+[data-sec="fn-reason"].mt-result-label { color:#f59e0b; -webkit-text-fill-color:#f59e0b; background:none; }
+[data-sec="fn-reason"].mt-result-line  { color:#fcd34d; background:rgba(245,158,11,0.08); border-radius:4px; padding:3px 8px; }
+[data-sec="fn-inj"].mt-result-label    { color:#10b981; -webkit-text-fill-color:#10b981; background:none; }
+[data-sec="fn-inj"].mt-result-line     { color:#6ee7b7; background:rgba(16,185,129,0.07); border-radius:4px; padding:3px 8px; }
+[data-sec="fn-sur"].mt-result-label    { color:#f43f5e; -webkit-text-fill-color:#f43f5e; background:none; }
+[data-sec="fn-sur"].mt-result-line     { color:#fda4af; background:rgba(244,63,94,0.07); border-radius:4px; padding:3px 8px; }
+
+/* ── Light-mode overrides for all per-section colours ── */
+[data-theme="light"] [data-sec="perm"].mt-result-line      { color:#0284c7; }
+[data-theme="light"] [data-sec="comb"].mt-result-line      { color:#7c3aed; }
+[data-theme="light"] [data-sec="pc-rel"].mt-result-line    { color:#b45309; }
+[data-theme="light"] [data-sec="ineq-sol"].mt-result-line  { color:#be123c; }
+[data-theme="light"] [data-sec="ineq-int"].mt-result-line  { color:#065f46; }
+[data-theme="light"] [data-sec="ineq-disc"].mt-result-line { color:#0369a1; }
+[data-theme="light"] [data-sec="wavy-sol"].mt-result-line  { color:#c2410c; }
+[data-theme="light"] [data-sec="mod-sol"].mt-result-line   { color:#c2410c; }
+[data-theme="light"] [data-sec="dbl-sol"].mt-result-line   { color:#4d7c0f; }
+[data-theme="light"] [data-sec="disc"].mt-result-line      { color:#0284c7; }
+[data-theme="light"] [data-sec="roots"].mt-result-line     { color:#7c3aed; }
+[data-theme="light"] [data-sec="vertex"].mt-result-line    { color:#b45309; }
+[data-theme="light"] [data-sec="vform"].mt-result-line     { color:#be123c; }
+[data-theme="light"] [data-sec="sumproduct"].mt-result-line{ color:#065f46; }
+[data-theme="light"] [data-sec="binom-term"].mt-result-line { color:#7c3aed; }
+[data-theme="light"] [data-sec="binom-total"].mt-result-line{ color:#065f46; }
+[data-theme="light"] [data-sec="binom-final"].mt-result-line{ color:#1e1b4b; }
+[data-theme="light"] [data-sec="rf-domain"].mt-result-line { color:#0284c7; }
+[data-theme="light"] [data-sec="rf-range"].mt-result-line  { color:#7c3aed; }
+[data-theme="light"] [data-sec="rf-props"].mt-result-line  { color:#b45309; }
+[data-theme="light"] [data-sec="fn-check"].mt-result-line  { color:#0369a1; }
+[data-theme="light"] [data-sec="fn-type"].mt-result-line   { color:#6d28d9; }
+[data-theme="light"] [data-sec="fn-reason"].mt-result-line { color:#92400e; }
+[data-theme="light"] [data-sec="fn-inj"].mt-result-line    { color:#065f46; }
+[data-theme="light"] [data-sec="fn-sur"].mt-result-line    { color:#9f1239; }
+
